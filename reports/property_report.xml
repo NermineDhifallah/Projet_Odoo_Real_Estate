@@ -1,0 +1,86 @@
+<odoo>
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-html</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+    </record>
+
+    <template id="property_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="rec">
+                    <h1>Property Report</h1>
+                     <br/>
+                    <style>
+                        table{
+                        width:100%;
+                        border:1px solid #b3adad;
+                        border-collapse: collapse;
+                        padding:5px;
+                        }
+                        table th{
+                        background-color: #85C1E9;
+                        color:#313030;
+                        padding:5px;
+                        min-height:200px;
+                        border: 1px solid #b3adad;
+                        text-align:center;
+                        }
+                        table td{
+                        background-color: #ffffff;
+                        color:#313030;
+                        padding:5px;
+                        min-height:100px;
+                        border:1px solid #b3adad;
+                        text-align:center;
+                        }
+                    </style>
+                    <table>
+                        <thead>
+                            <th colspan="4">General Information</th>
+                        </thead>
+                        <tbody>
+                            <td style="font-weight: bold">Name</td>
+                            <td><t t-esc="rec.name"/></td>
+                            <td style="font-weight: bold">Postcode</td>
+                             <td><t t-esc="rec.postcode"/></td>
+                        </tbody>
+                         <thead>
+                            <th colspan="4">Additional Information</th>
+                        </thead>
+                        <tbody>
+                            <td style="font-weight: bold">Owner</td>
+                            <td><t t-esc="rec.owner_id.name"/></td>
+                            <td style="font-weight: bold">Phone</td>
+                             <td><t t-esc="rec.owner_phone"/></td>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table>
+                        <thead>
+                            <th>Description</th>
+                            <th>Area(m^2)</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="rec.line_ids" t-as="line">
+                                <tr>
+                                    <td>
+                                        <t t-esc="line.description"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.area"/>
+                                    </td>
+                                </tr>
+
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>
